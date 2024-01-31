@@ -90,10 +90,34 @@ print(f"Mean delivery time for each pizza size: {connection.execute(stmt).fetcha
 # Is there a correlation between delivery_time and driver_rating
 import seaborn as sns
 import matplotlib.pyplot as plt
-fig, ax = plt.subplots(1, 1, figsize=(12, 7))
-sns.scatterplot(data=df,
-                ax=ax,
+# fig, ax = plt.subplots(1, 1, figsize=(12, 7))
+fig = sns.scatterplot(data=df,
                 x='delivery_time',
                 y='driver_rating')
+fig = fig.get_figure()
 print("It seems like there is no correlation/pattern between these two variables.")
 plt.show()
+fig.savefig("corr.png")
+
+#%% dashboard?
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+class Config(object):
+    SQLALCHEMY_DATABASE_URL = 'sqlite:///app.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+db = SQLAlchemy()
+
+def create_app():
+    server = Flask(__name__)
+    server.config.from_object(Config)
+    db.init_app(server)
+    
+    with server.app_content():
+        df = pd.read_csv('pizza_delivery.csv')
+        df.to_sql('pizza', con=db.engine, if_exists='replace')
+        
+    from .dashboard import create_dashapp
+    dash_app = create_dashapp(server)
+    return server
