@@ -2,7 +2,7 @@
 #### Description: The projects and challenges I did
 
 #### Update:
-- [Data Analysis Challenges - Pizza Deliveries](Data Analysis Challenges/NEW_DA_PROJECTS/week_1)
+- [Data Analysis Challenges - Week 1 - Pizza Deliveries](https://github.com/RJUNCC/Projects_Challenges/tree/1b2983e093e22ee6d74353b1ef3f0ef276e68e12/Data%20Analysis%20Challenges/NEW_DA_PROJECTS/week_1)
 
 ##### Goals:
 - [ ] DataCamp Data Scientist & Data Scientist Professional Certificate
