@@ -1,5 +1,9 @@
 #### Project Name: Projects and Challenges
 #### Description: The projects and challenges I did
+
+#### Update:
+- [Data Analysis Challenges - Pizza Deliveries]()
+
 ##### Goals:
 - [ ] DataCamp Data Scientist & Data Scientist Professional Certificate
 - [ ] DataCamp Machine Learning Scientist Certificate
