@@ -7,7 +7,7 @@
 ##### Goals:
 - [ ] DataCamp Data Scientist & Data Scientist Professional Certificate
 - [ ] DataCamp Machine Learning Scientist Certificate
-- [ ] Learn Git and Shell
+- [X] Learn Git and Shell
 - [ ] GreatLearning/MIT AI and Machine Learning Certificate
 - [ ] Kaggle Grandmaster
 - [ ] Top 10 in Kaggle Challenge
