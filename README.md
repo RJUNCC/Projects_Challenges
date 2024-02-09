@@ -13,6 +13,6 @@
 - [ ] Top 10 in Kaggle Challenge
 - [ ] Get a Data Science Internship
 - [ ] Make an Options trading strategy with Python
-- [ ] Make dashboards in Dash and Flask
+- [ ] Make dashboards in Streamlit
 - [ ] Learn Docker
 - [ ] Learn Data Engineering
