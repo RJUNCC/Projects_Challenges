@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "tpy1"
+version = "0.1.0"
+description = ""
+authors = ["RJUNCC <20bigal04@ryeguytech.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^1.3.3"
+numpy = "^1.25.0"
+matplotlib = "^3.8.0"
+seaborn = "^0.13.0" 
+statsmodels = "^0.14.0"
+scipy = "^1.12.0"  
+scikit-learn = "^1.0.0"
+ipykernel = "^6.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
