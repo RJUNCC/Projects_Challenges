@@ -1,2 +1,3 @@
 
 *.csv
+/personal_projects/spotify_app/.env
