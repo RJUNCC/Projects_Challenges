@@ -1,3 +1,4 @@
+#%%
 import requests
 from requests import post, get
 from dotenv import load_dotenv
@@ -5,117 +6,75 @@ import os
 import base64
 import json
 import streamlit as st
+from pprint import pprint
+# import hashlib
+# import secrets
+# from flask import Flask, redirect, request
+# import Express
+import string
+from functions import *
 
-load_dotenv()
+#%%
+client_id, client_secret = load_env()
+rURI = "https://open.spotify.com/artist/0AyhSYrWjcI7Z0n5SGrqmY"
+unique_state = "392"
+auth_url = "https://accounts.spotify.com/authorize?client_id=14ad40b2678d4e9b84b42b92b78b2d19&response_type=code&redirect_uri=https://open.spotify.com/artist/0AyhSYrWjcI7Z0n5SGrqmY&scope=user-library-read%20user-read-private%20user-read-email&state=392"
 
-client_id = os.getenv("CLIENT_ID")
-client_secret = os.getenv("CLIENT_SECRET")
+#%% Generate code_verifier once
+code_verifier = generate_code_verifier()
+code_challenge = generate_code_challenge(code_verifier)
 
-# INIT
-def get_token():
-    auth_string = client_id + ":" + client_secret
-    auth_bytes = auth_string.encode("utf-8")
-    auth_base64 = str(base64.b64encode(auth_bytes), 'utf-8')
+#%%
+print("Please open the following URL in a browser to authorize:")
+print(auth_url)
 
-    url = "https://accounts.spotify.com/api/token"
-    headers = {
-        "Authorization":"Basic " + auth_base64,
-        "Content-Type":"application/x-www-form-urlencoded"
-    }
+# manually enter auth code obtained from teh redirect URL
+auth_code = input("Enter auth code: ")
 
-    data = {"grant_type":"client_credentials"}
-    result = post(url, headers=headers, data=data)
-    json_result = json.loads(result.content)
-    token = json_result['access_token']
-    return token
+#%%
+token_response = exchange_code_for_token(auth_code, code_verifier, client_id, client_secret, rURI)
+print(token_response)
 
-def get_auth_header(token):
-    return {"Authorization":"Bearer " + token}
+#%%
+token = token_response['access_token']
+headers = {
+    'Authorization':"Bearer " + token
+}
+print(token, headers)
 
+#%%
+user_saved_tracks = get_user_saved_tracks(token, None, headers)
 
-# SEARCH
-def search_for_artist(token, artist_name):
-    url = "https://api.spotify.com/v1/search"
-    headers = get_auth_header(token)
-    # query = f"q={artist_name}&type=artist,track"
-    query = f"?q={artist_name}&type=artist&limit=1"
+list_of_dicts = []
+for idx, i in enumerate(user_saved_tracks['items']):
+    big_dict = {}
+    big_dict[i['track']['name']] = [{'artist_info':[{'name':{}}], 'album_name':set([i['track']['album']['name']]), 'album_URI':set([i['track']['album']['uri']])}]
+    for artist in i['track']['artists']:
+        big_dict[i['track']['name']][0]['artist_info'][0]['name'][artist['name']] = artist['id']
+        # big_dict[i['track']['name']][0]['artist_info'][0]['name'][artist['name']] = artist['id']
+        # print(temp_dict)
+        # print(idx)
+        # print(artist)
+    list_of_dicts.append(big_dict)
+pprint(list_of_dicts)
 
-    query_url = url + query
-    result = get(query_url, headers=headers)
-    json_result = json.loads(result.content)
-    # print(json_result)
-    return json_result
-
-# def search_show(token, artist_name):
-#     url = f"https://api.spotify.com/v1/search"
-#     headers = get_auth_header(token)
-#     query = f"?q={artist_name}&type=artist,show&limit=5"
-#     query_url = url+query
-#     result = get(query_url, headers=headers)
-#     json_result = json.loads(result.content)
-#     print(json_result)
+#%%
 
 
-# GET
-def get_artist_id(token, artist_name):
-    json_result = search_for_artist(token, artist_name)['artists']['items']
-    if len(json_result) == 0:
-        print("No artist with this name exists...")
-        return None
-    return json_result[0]
-
-# def get_show_id(token, artist_name):
-#     json_result = search_show(token, artist_name)['shows']
-
-def get_songs_by_artist(token, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=US"
-    headers = get_auth_header(token)
-    result = get(url, headers=headers)
-    # print(result)
-    json_result = json.loads(result.content)['tracks']
-    return json_result
-
-def related_artists(token, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}/related-artists"
-    headers = get_auth_header(token)
-    result = get(url, headers=headers)
-    json_result = json.loads(result.content)['artists']
-    return json_result
-
-# def get_new_releases(token, artist_id):
-#     url = "https://api.spotify.com/v1/browse/new-releases"
-#     headers = get_auth_header(token)
-#     result = get(url, headers=headers)
-#     json_result = json.loads(result.content)['albums']['items']
-#     # return json_result
-#     print(json_result)
-
-def get_artist_shows(token, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}/shows"
-    headers = get_auth_header(token)
-    result = get(url, headers=headers)
-    json_result = json.loads(result.content)
-    # return json_result
-    print(json_result)
-
-# def player(token):
-#     url = "https://api.spotify.com/v1/me/player"
-#     headers = get_auth_header(token)
-#     result = get(url, headers=headers)
-#     json_result = json.loads(result.content)
-#     print(json_result)
-
+#%%
+    # print(f"{i['track']['name']} by {i['track']['artists']['name']}")
 # token = get_token()
-# result = get_artist_id(token, 'Tool')
-# artist_id = result['id']
-# songs = get_songs_by_artist(token, artist_id)
-
-# player(token)
-# get_artist_shows(token, artist_id)
-# search_show(token, "Bad Bunny")
-
-
-# get_new_releases(token, artist_id)
+# # token = json.loads(response.content.decode('utf-8'))['access_token']
+# # headers = {
+# #     'Authorization': 'Bearer ' + token
+# # }
+# # result = get_artist_id(token, 'Tool')
+# # artist_id = result['id']
+# # songs = get_songs_by_artist(token, artist_id)
+# tracks = get_user_saved_tracks(token)
+# print(token)
+# # print(headers)
+# print(tracks)
 
 # related = related_artists(token, artist_id)
 # for idx, artist in enumerate(related):
@@ -124,50 +83,55 @@ def get_artist_shows(token, artist_id):
 # for idx, song in enumerate(songs):
 #     print(f"{idx + 1}. {song['name']}")
 
-# streamlit app title
-st.title("Spotify App - Top 10 Tracks")
+# for idx, song in enumerate(tracks):
+#     print(f"{idx + 1}. {song['name']}")
+# print(tracks)
 
-# text input
-artist_name = st.text_input("Enter artist name: ")
+# # streamlit app title
+# st.title("Spotify App - Top 10 Tracks")
 
-if st.button("Search"):
-    if artist_name:
-        token = get_token()
-        artist_info = get_artist_id(token, artist_name)
-        artist_id = artist_info['id']
+# # text input
+# artist_name = st.text_input("Enter artist name: ")
+
+# if st.button("Search"):
+#     if artist_name:
+#         token = get_token()
+#         artist_info = get_artist_id(token, artist_name)
+#         artist_id = artist_info['id']
         
-        if artist_info:
+#         if artist_info:
             
-            # col1, col2, col3 = st.columns(3)
-            col1, col2 = st.columns(2)
-            col3, col4 = st.columns(2)
-            with col1:
-                st.header(f"Top Tracks by {artist_name}")
-                songs = get_songs_by_artist(token, artist_info['id'])
-                for idx, song in enumerate(songs):
-                    # st.write(f"{idx + 1}. {song['name']}")
-                    st.write(f"{idx + 1}. [{song['name']}](https://open.spotify.com/track/{song['id']})")
-            with col2:
-                st.header(f"Artists related to {artist_name}")
-                related = related_artists(token, artist_id)
-                for idx, artist in enumerate(related):
-                    if idx == 10:
-                        break
-                    # st.write(f"{idx + 1}. {artist['name']}")
-                    st.write(f"{idx + 1}. [{artist['name']}](https://open.spotify.com/artist/{artist['id']})")
-            # with col3:
-                # st.header("Shows: ")
-                # shows = get_artist_shows(token, artist_id)
-                # for show in shows:
-                #     st.write(f"{show['date']} - {show['venue']['name']}, {show['venue']['city']['name']}, {show['venue']['country']}")
-                # st.header("Playback menu: ")
-                # st.write("Click link to play on Spotify")
-            with col3:
-                st.header("Recommended Tracks")
+#             # col1, col2, col3 = st.columns(3)
+#             col1, col2 = st.columns(2)
+#             col3, col4 = st.columns(2)
+#             with col1:
+#                 st.header(f"Top Tracks by {artist_name}")
+#                 songs = get_songs_by_artist(token, artist_info['id'])
+#                 for idx, song in enumerate(songs):
+#                     # st.write(f"{idx + 1}. {song['name']}")
+#                     st.write(f"{idx + 1}. [{song['name']}](https://open.spotify.com/track/{song['id']})")
+#             with col2:
+#                 st.header(f"Artists related to {artist_name}")
+#                 related = related_artists(token, artist_id)
+#                 for idx, artist in enumerate(related):
+#                     if idx == 10:
+#                         break
+#                     # st.write(f"{idx + 1}. {artist['name']}")
+#                     st.write(f"{idx + 1}. [{artist['name']}](https://open.spotify.com/artist/{artist['id']})")
+#             # with col3:
+#                 # st.header("Shows: ")
+#                 # shows = get_artist_shows(token, artist_id)
+#                 # for show in shows:
+#                 #     st.write(f"{show['date']} - {show['venue']['name']}, {show['venue']['city']['name']}, {show['venue']['country']}")
+#                 # st.header("Playback menu: ")
+#                 # st.write("Click link to play on Spotify")
+#             with col3:
+#                 st.header("Recommended Tracks")
             
-            with col4:
-                st.header("")
-        else:
-            st.write("No artist with this name exists...")
-    else:
-        st.write("Please enter an artist name.")
+#             with col4:
+#                 st.header("")
+#         else:
+#             st.write("No artist with this name exists...")
+#     else:
+#         st.write("Please enter an artist name.")
+
