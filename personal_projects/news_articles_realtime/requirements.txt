@@ -1,0 +1,11 @@
+newsapi
+pandas
+numpy
+json
+requests
+tensorflow
+keras
+logging
+dotenv
+pprint
+nltk
