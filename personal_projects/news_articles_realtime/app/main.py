@@ -25,7 +25,8 @@ load_dotenv("../.env")
 
 
 # %%
-client = NewsApiClient(api_key=os.getenv("NEWSAPI_KEY"))
+# client = NewsApiClient(api_key=os.getenv("NEWSAPI_KEY"))
+client = NewsApiClient(api_key="4a107bac530044a4a6689d38744dcc65")
 
 analyzer = SentimentIntensityAnalyzer()
 bitcoin_sentiments = []
