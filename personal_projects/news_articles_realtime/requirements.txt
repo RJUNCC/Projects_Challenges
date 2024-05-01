@@ -1,11 +1,7 @@
-newsapi
+streamlit
 pandas
 numpy
-json
-requests
-tensorflow
-keras
-logging
-dotenv
-pprint
 nltk
+python-dotenv
+# pprintpp
+newsapi-python

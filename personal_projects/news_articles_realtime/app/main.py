@@ -10,10 +10,10 @@ nltk.downloader.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import os
 from dotenv import load_dotenv
-from pprint import pprint
+# from pprint import pprint
 import logging
 import streamlit as st
-from textblob import TextBlob
+# from textblob import TextBlob
 from functions import *
 
 # %%
@@ -36,6 +36,9 @@ sentiment_count = {
     "Neutral":0,
     "Negative":0
 }
+
+# config
+st.set_page_config(layout='wide')
 
 st.title("News App")
 topic = st.text_input("Input topic")
@@ -82,6 +85,17 @@ if st.button("Search"):
         
         except AttributeError:
             pass
+
+        # st.markdown(
+        #     """
+        #     <style>
+        #     .reportview-container .main .block-container {
+        #         max-width: 3000px;
+        #     }
+        #     </style>
+        #     """,
+        #     unsafe_allow_html=True
+        # )
 
         with st.container(border=True):
             if article['title'] == "[Removed]":
