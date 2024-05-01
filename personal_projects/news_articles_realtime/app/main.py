@@ -44,6 +44,7 @@ st.title("News App")
 topic = st.text_input("Input topic")
 try:
     language = st.sidebar.text_input('Country code')
+    language = language.lower()
 
     if language == "":
         language = "en"
