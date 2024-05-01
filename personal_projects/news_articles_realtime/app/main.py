@@ -23,6 +23,8 @@ logger.setLevel(logging.DEBUG)
 # %%
 load_dotenv("../.env")
 
+#%%
+st.secrets['NEWSAPI_KEY']
 
 # %%
 # client = NewsApiClient(api_key=os.getenv("NEWSAPI_KEY"))
