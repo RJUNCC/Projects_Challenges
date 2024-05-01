@@ -44,7 +44,7 @@ st.title("News App")
 topic = st.text_input("Input topic")
 try:
     language = st.sidebar.text_input('Country code')
-    st.sidebar.markdown("Possible options: ar, de, en, es, fr, he, it, nl, no, pt, ru, sv, ud, zh")
+    st.sidebar.markdown("Possible options:<br /> ar, de, en, es, fr, he, it, nl, no, pt, ru, sv, ud, zh")
     language = language.lower()
 
     if language == "":
