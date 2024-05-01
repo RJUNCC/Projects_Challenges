@@ -15,7 +15,7 @@ import logging
 import streamlit as st
 # from textblob import TextBlob
 from functions import *
-
+st.set_page_config(layout='wide')
 # %%
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -23,13 +23,10 @@ logger.setLevel(logging.DEBUG)
 # %%
 load_dotenv("../.env")
 
-#%%
-st.secrets['NEWSAPI_KEY']
-
 # %%
 # client = NewsApiClient(api_key=os.getenv("NEWSAPI_KEY"))
 # client = NewsApiClient(api_key="4a107bac530044a4a6689d38744dcc65")
-client = NewsApiClient(api_key=os.environ['NEWSAPI_KEY'])
+client = NewsApiClient(api_key=st.secrets['NEWSAPI_KEY'])
 
 
 analyzer = SentimentIntensityAnalyzer()
@@ -42,8 +39,6 @@ sentiment_count = {
     "Negative":0
 }
 
-# config
-st.set_page_config(layout='wide')
 
 st.title("News App")
 topic = st.text_input("Input topic")
