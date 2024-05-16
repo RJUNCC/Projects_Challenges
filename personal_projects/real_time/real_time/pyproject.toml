@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "src"
+version = "0.1.0"
+description = ""
+authors = ["RJUNCC <20bigal04@ryeguytech.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+quixstreams = "^2.4.1"
+kafka-python = "^2.0.2"
+redpanda = "^0.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
