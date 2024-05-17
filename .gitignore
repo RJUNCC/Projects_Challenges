@@ -1,3 +1,17 @@
 
 *.csv
 /personal_projects/spotify_app/.env
+/personal_projects/cats_dogs_cls/data
+/personal_projects/cats_dogs_cls2/data
+/kaggle/home_credit_credit_risk/data
+/personal_projects/cats_dogs_cls2/data/raw
+/personal_projects/capitalbikeshare/data
+/personal_projects/fashion_recommendation_system/data
+/personal_projects/news_articles_realtime/data
+/personal_projects/road_lane_line_detection/data
+/personal_projects/news_articles_realtime/Makefile
+/personal_projects/fashion_recommendation_system/images
+/personal_projects/capitalbikeshare/.env
+/personal_projects/news_articles_realtime/.env
+/personal_projects/realtime_stocks/.env
+/personal_projects/news_articles_realtime/secrets.toml
