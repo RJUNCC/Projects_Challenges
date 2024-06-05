@@ -8,11 +8,11 @@
 - [ ] DataCamp Data Scientist & Data Scientist Professional Certificate
 - [ ] DataCamp Machine Learning Scientist Certificate
 - [X] Learn Git and Shell
-- [ ] GreatLearning/MIT AI and Machine Learning Certificate
+- [X] GreatLearning/MIT AI and Machine Learning Certificate
 - [ ] Kaggle Grandmaster
 - [ ] Top 10 in Kaggle Challenge
 - [ ] Get a Data Science Internship
-- [ ] Make an Options trading strategy with Python
-- [ ] Make dashboards in Streamlit
-- [ ] Learn Docker
+- [X] Make an Options trading strategy with Python
+- [X] Make dashboards in Streamlit
+- [X] Learn Docker
 - [ ] Learn Data Engineering
