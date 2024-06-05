@@ -1,0 +1,14 @@
+trl
+datasets
+torch
+peft
+transformers
+matplotlib
+tiktoken
+langchain
+yt_dlp
+docarray
+huggingface_hub
+faiss-cpu
+sentence_transformers
+python-dotenv
