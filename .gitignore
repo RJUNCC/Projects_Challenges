@@ -15,3 +15,4 @@
 /personal_projects/news_articles_realtime/.env
 /personal_projects/realtime_stocks/.env
 /personal_projects/news_articles_realtime/secrets.toml
+/personal_projects/llm_training/.env

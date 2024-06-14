@@ -1,0 +1,12 @@
+pandas
+numpy
+seaborn
+matplotlib
+psycopg2
+# wget
+python-dotenv
+SQLAlchemy
+# pyarrow==8.0.0
+snowflake-connector-python==2.7.3
+snowflake-sqlalchemy==1.2.5
+python==3.9

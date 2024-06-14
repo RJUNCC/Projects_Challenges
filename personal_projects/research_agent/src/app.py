@@ -378,5 +378,6 @@ group_chat_manager = autogen.GroupChatManager(groupchat=groupchat, llm_config={"
 # message = st.text_input("Enter message for chat assistant:")
 # if st.button("Submit Message"):
 #     st.markdown(user_proxy.initiate_chat(group_chat_manager, message=message))
-message = "Research me some YouTube video ideas about Data Science, Music, or Statistics."
+# message = "Research me some YouTube video ideas about Data Science, Music, or Statistics."
+message = str(input("Enter research assignment: "))
 user_proxy.initiate_chat(group_chat_manager, message=message)
